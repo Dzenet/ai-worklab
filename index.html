@@ -97,12 +97,10 @@ const firebaseConfig = {
   if (!allowedDomains.includes(domain)) {
     emailError.textContent = 'Please use an email address with Skatteetaten.no as domain';
     event.preventDefault(); // Prevent form submission
-    return false;
   } 
   
   else {
     emailError.textContent = ''; // Clear any previous error message 
-    return true;
   }
   
   });
@@ -135,7 +133,7 @@ const firebaseConfig = {
     };
 
     try {
-        if (event = true) {
+      
         await addDoc(collection(db, "registrations"), data);
       // After Firebase registration succeeds
         form.reset();
@@ -143,7 +141,7 @@ const firebaseConfig = {
         alert("✅ Registration submitted successfully!" + " A Teams invitation will be sent out later, including the date and location details" );
         await updateCounter(); // refresh counter after new registration
        
-    }  } 
+      } 
     catch (error) {
       alert("⚠️ Failed to submit registration. Please try again.");
       console.error(error);
@@ -157,6 +155,7 @@ const firebaseConfig = {
 </script>
 </body>
 </html>
+
 
 
 
