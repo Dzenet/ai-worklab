@@ -84,24 +84,28 @@ const firebaseConfig = {
 
   
   document.getElementById("registrationForm").addEventListener("submit", function (event) {
-    const emailInput = document.getElementById("email")
+    const emailInput = document.getElementById("email")  
+    const emailError = document.getElementById('emailError');
+    const allowedDomains = ['skatteetaten.no']; // Define your allowed domains
     
-  const emailError = document.getElementById('emailError');
-  const allowedDomains = ['skatteetaten.no']; // Define your allowed domains
-
-  // Get the email value and extract the domain
-  const email = emailInput.value;
-  const parts = email.split('@');
-  const domain = parts.length > 1 ? parts[1].toLowerCase() : '';
+    // Get the email value and extract the domain
+    const email = emailInput.value;
+    const parts = email.split('@');
+    const domain = parts.length > 1 ? parts[1].toLowerCase() : '';
 
   // Check if the domain is in the allowed list
   if (!allowedDomains.includes(domain)) {
     emailError.textContent = 'Please use an email address with Skatteetaten.no as domain';
     event.preventDefault(); // Prevent form submission
-  } else {
-    emailError.textContent = ''; // Clear any previous error message
+    return false;
+  } 
+  
+  else {
+    emailError.textContent = ''; // Clear any previous error message 
+    return true;
   }
-});
+  
+  });
     
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -131,12 +135,16 @@ const firebaseConfig = {
     };
 
     try {
-      await addDoc(collection(db, "registrations"), data);
-    // After Firebase registration succeeds
-      form.reset();
-      alert("✅ Registration submitted successfully!" + " A Teams invitation will be sent out later, including the date and location details" );
-      await updateCounter(); // refresh counter after new registration
-    } catch (error) {
+        if (event = true) {
+        await addDoc(collection(db, "registrations"), data);
+      // After Firebase registration succeeds
+        form.reset();
+        
+        alert("✅ Registration submitted successfully!" + " A Teams invitation will be sent out later, including the date and location details" );
+        await updateCounter(); // refresh counter after new registration
+       
+    }  } 
+    catch (error) {
       alert("⚠️ Failed to submit registration. Please try again.");
       console.error(error);
     }
@@ -149,6 +157,7 @@ const firebaseConfig = {
 </script>
 </body>
 </html>
+
 
 
 
