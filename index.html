@@ -64,16 +64,6 @@
 
       <button type="submit">Register</button>
     </form>
-
-    
-    <form id="emailForm" action="https://formsubmit.co/denetbero@hotmail.com" methodd="hiddenName">
-  <input type="hidden" name="email" id="hiddenEmail">
-  <input type="hidden" name="role" id="hiddenRole">
-  <input type="hidden" name="experience" id="hiddenExperience">
-  <input type="hidden" name="_subject" value="New AI Worklab Registration">
-  <input type="hidden" name="_autoresponse" value="Thank you for registering for AI Worklab! We'll send a Teams invite with date and location soon.">
-</form>
-
     <div id="counter">Loading total registrations...</div>
   </div>
 
@@ -121,13 +111,6 @@ const firebaseConfig = {
     try {
       await addDoc(collection(db, "registrations"), data);
     // After Firebase registration succeeds
-      document.getElementById('hiddenName').value = data.fullName;
-      document.getElementById('hiddenEmail').value = data.email;
-      document.getElementById('hiddenRole').value = data.role;
-      document.getElementById('hiddenExperience').value = data.experience;
-      // Submit hidden form to FormSubmit
-      document.getElementById('emailForm').submit
-
       form.reset();
       alert("✅ Registration submitted successfully!" + " A Teams invitation will be sent out later, including the date and location details" );
       await updateCounter(); // refresh counter after new registration
@@ -144,6 +127,7 @@ const firebaseConfig = {
 </script>
 </body>
 </html>
+
 
 
 
