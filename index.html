@@ -120,6 +120,14 @@ const firebaseConfig = {
 
     try {
       await addDoc(collection(db, "registrations"), data);
+    // After Firebase registration succeeds
+      document.getElementById('hiddenName').value = data.fullName;
+      document.getElementById('hiddenEmail').value = data.email;
+      document.getElementById('hiddenRole').value = data.role;
+      document.getElementById('hiddenExperience').value = data.experience;
+      // Submit hidden form to FormSubmit
+      document.getElementById('emailForm').submi
+
       form.reset();
       alert("✅ Registration submitted successfully!" + " A Teams invitation will be sent out later, including the date and location details" );
       await updateCounter(); // refresh counter after new registration
@@ -131,18 +139,12 @@ const firebaseConfig = {
     // ✅ Always update counter on page load
   document.addEventListener("DOMContentLoaded", updateCounter);
 
-    // After Firebase registration succeeds
-document.getElementById('hiddenName').value = data.fullName;
-document.getElementById('hiddenEmail').value = data.email;
-document.getElementById('hiddenRole').value = data.role;
-document.getElementById('hiddenExperience').value = data.experience;
-
-document.getElementById('emailForm').submit();
 
     
 </script>
 </body>
 </html>
+
 
 
 
