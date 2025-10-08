@@ -49,7 +49,8 @@
       <input type="text" id="name" name="Full Name" required />
 
       <label for="email">Corporate Email Address</label>
-      <input type="email" id="email" name="Email" placeholder="Name.Lastname@skatteetaten.no" required />
+      <input type="email" id="email" name="Email" placeholder="Ola.Nordmann@skatteetaten.no" required />
+      <span id="emailError" style="color: red;"></span>
 
       <label for="role">Role</label>
       <input type="text" id="role" name="Role" required />
@@ -81,6 +82,27 @@ const firebaseConfig = {
   measurementId: "G-18NS9DRHBC"
 };
 
+  
+  document.getElementById("registrationForm").addEventListener("submit", function (event) {
+    const emailInput = document.getElementById("email")
+    
+  const emailError = document.getElementById('emailError');
+  const allowedDomains = ['skatteetaten.no']; // Define your allowed domains
+
+  // Get the email value and extract the domain
+  const email = emailInput.value;
+  const parts = email.split('@');
+  const domain = parts.length > 1 ? parts[1].toLowerCase() : '';
+
+  // Check if the domain is in the allowed list
+  if (!allowedDomains.includes(domain)) {
+    emailError.textContent = 'Please use an email address with Skatteetaten.no as domain';
+    event.preventDefault(); // Prevent form submission
+  } else {
+    emailError.textContent = ''; // Clear any previous error message
+  }
+});
+    
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const form = document.getElementById('registrationForm');
@@ -127,6 +149,7 @@ const firebaseConfig = {
 </script>
 </body>
 </html>
+
 
 
 
