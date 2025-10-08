@@ -65,6 +65,15 @@
       <button type="submit">Register</button>
     </form>
 
+    
+    <form id="emailForm" action="https://formsubmit.co/denetbero@hotmail.com" methodd="hiddenName">
+  <input type="hidden" name="email" id="hiddenEmail">
+  <input type="hidden" name="role" id="hiddenRole">
+  <input type="hidden" name="experience" id="hiddenExperience">
+  <input type="hidden" name="_subject" value="New AI Worklab Registration">
+  <input type="hidden" name="_autoresponse" value="Thank you for registering for AI Worklab! We'll send a Teams invite with date and location soon.">
+</form>
+
     <div id="counter">Loading total registrations...</div>
   </div>
 
@@ -122,21 +131,19 @@ const firebaseConfig = {
     // ✅ Always update counter on page load
   document.addEventListener("DOMContentLoaded", updateCounter);
 
-    fetch("https://formsubmit.co/ajax/denetbero@hotmail.com", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    name: data.fullName,
-    email: data.email,
-    role: data.role,
-    experience: data.experience,
-  }),
-});
+    // After Firebase registration succeeds
+document.getElementById('hiddenName').value = data.fullName;
+document.getElementById('hiddenEmail').value = data.email;
+document.getElementById('hiddenRole').value = data.role;
+document.getElementById('hiddenExperience').value = data.experience;
 
-  
+document.getElementById('emailForm').submit();
+
+    
 </script>
 </body>
 </html>
+
 
 
 
