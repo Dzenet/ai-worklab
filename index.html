@@ -82,29 +82,6 @@ const firebaseConfig = {
   measurementId: "G-18NS9DRHBC"
 };
 
-  
-  document.getElementById("registrationForm").addEventListener("submit", function (event) {
-    const emailInput = document.getElementById("email")  
-    const emailError = document.getElementById('emailError');
-    const allowedDomains = ['skatteetaten.no']; // Define your allowed domains
-    
-    // Get the email value and extract the domain
-    const email = emailInput.value;
-    const parts = email.split('@');
-    const domain = parts.length > 1 ? parts[1].toLowerCase() : '';
-
-  // Check if the domain is in the allowed list
-  if (!allowedDomains.includes(domain)) {
-    emailError.textContent = 'Please use an email address with Skatteetaten.no as domain';
-    event.preventDefault(); // Prevent form submission
-  } 
-  
-  else {
-    emailError.textContent = ''; // Clear any previous error message 
-  }
-  
-  });
-    
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const form = document.getElementById('registrationForm');
@@ -121,8 +98,24 @@ const firebaseConfig = {
     }
   }
 
-  form.addEventListener('submit', async (e) => {
+  
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Email domain validation
+    const emailInput = document.getElementById("email");
+    const allowedDomains = ['skatteetaten.no'];
+    const email = emailInput.value;
+    const parts = email.split('@');
+    const domain = parts.length > 1 ? parts[1].toLowerCase() : '';
+
+    if (!allowedDomains.includes(domain)) {
+      emailError.textContent = 'Please use an email address with skatteetaten.no as domain';
+      return; // Stop submission
+    } else {
+      emailError.textContent = '';
+    }
+
 
     const data = {
       fullName: form.name.value,
@@ -134,12 +127,13 @@ const firebaseConfig = {
 
     try {
       
-        await addDoc(collection(db, "registrations"), data);
+      await addDoc(collection(db, "registrations"), data);
       // After Firebase registration succeeds
-        form.reset();
+      form.reset();
         
-        alert("✅ Registration submitted successfully!" + " A Teams invitation will be sent out later, including the date and location details" );
-        await updateCounter(); // refresh counter after new registration
+      alert("✅ Registration submitted successfully!" + " A Teams invitation will be sent out later, including the date and location details" );
+      
+      await updateCounter(); // refresh counter after new registration
        
       } 
     catch (error) {
@@ -155,6 +149,7 @@ const firebaseConfig = {
 </script>
 </body>
 </html>
+
 
 
 
