@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +15,6 @@
       align-items: center;
       min-height: 100vh;
     }
-
     .form-container {
       background-color: white;
       padding: 2rem;
@@ -25,69 +23,106 @@
       max-width: 480px;
       width: 100%;
     }
-
-    h1 {
-      text-align: center;
-      color: #333;
+    h1 { text-align: center; color: #333; }
+    p { text-align: center; color: #555; margin-bottom: 2rem; }
+    label { font-weight: bold; display: block; margin-top: 1rem; color: #333; }
+    input, select {
+      width: 100%; padding: 10px; margin-top: 5px;
+      border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;
     }
-
-    p {
-      text-align: center;
-      color: #555;
-      margin-bottom: 2rem;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 1rem;
-      color: #333;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-
     button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 12px;
-      margin-top: 1.5rem;
-      width: 100%;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
+      background-color: #007bff; color: white; border: none;
+      padding: 12px; margin-top: 1.5rem; width: 100%;
+      border-radius: 6px; font-size: 1rem; cursor: pointer;
     }
-
-    button:hover {
-      background-color: #0056b3;
-    }
+    button:hover { background-color: #0056b3; }
+    #counter { text-align: center; margin-top: 1rem; color: #333; font-weight: bold; }
   </style>
 </head>
-
 <body>
   <div class="form-container">
     <h1>AI Worklab</h1>
     <p>Explore how AI can enhance your workflow. Sign up below to join the session.</p>
-    <form action="https://formsubmit.co/dzenet.bero@skatteetaten.no" method="POST"> <input type="hidden" name="_cc"
-        value="ole.akre@skatteetaten.no" /> <label for="name">Full Name</label> <input type="text" id="name"
-        name="Full Name" required /> <label for="email">Corporate Email Address</label> <input type="email" id="email"
-        name="Email" placeholder="name@company.com" required /> <label for="role">Role</label> <input type="text"
-        id="role" name="Role" required /> <label for="experience">Experience Level with AI</label> <select
-        id="experience" name="Experience Level" required>
+
+    <form id="registrationForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="Full Name" required />
+
+      <label for="email">Corporate Email Address</label>
+      <input type="email" id="email" name="Email" placeholder="name@company.com" required />
+
+      <label for="role">Role</label>
+      <input type="text" id="role" name="Role" required />
+
+      <label for="experience">Experience Level with AI</label>
+      <select id="experience" name="Experience Level" required>
         <option value="">-- Select an option --</option>
         <option value="Beginner">Beginner</option>
         <option value="Intermediate">Intermediate</option>
         <option value="Advanced">Advanced</option>
-      </select> <button type="submit">Register</button> </form>
-  </div>
-</body>
+      </select>
 
+      <button type="submit">Register</button>
+    </form>
+
+    <div id="counter">Loading total registrations...</div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, getCountFromServer } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAiRpiXkHDRxNymdCaZOMkcTqauKGy_R_I",
+  authDomain: "ai-worklab.firebaseapp.com",
+  projectId: "ai-worklab",
+  storageBucket: "ai-worklab.firebasestorage.app",
+  messagingSenderId: "475078577267",
+  appId: "1:475078577267:web:e0422820a985ef45dcee06",
+  measurementId: "G-18NS9DRHBC"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const form = document.getElementById('registrationForm');
+    const counter = document.getElementById('counter');
+
+    async function updateCounter() {
+      const snapshot = await getCountFromServer(collection(db, "registrations"));
+      counter.innerText = `Total registered: ${snapshot.data().count}`;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        fullName: form.name.value,
+        email: form.email.value,
+        role: form.role.value,
+        experience: form.experience.value,
+        timestamp: new Date()
+      };
+
+      await addDoc(collection(db, "registrations"), data);
+      form.reset();
+      alert("✅ Registration submitted successfully!");
+      updateCounter();
+    });
+
+    // Send email notification via FormSubmit (free)
+fetch("https://formsubmit.co/ajax/denetbero@hotmail.com", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name: data.fullName,
+    email: data.email,
+    role: data.role,
+    experience: data.experience,
+  }),
+});
+
+    updateCounter();
+  </script>
+</body>
 </html>
