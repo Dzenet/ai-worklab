@@ -119,6 +119,8 @@ const firebaseConfig = {
       console.error(error);
     }
   });
+    // ✅ Always update counter on page load
+  document.addEventListener("DOMContentLoaded", updateCounter);
 
     fetch("https://formsubmit.co/ajax/denetbero@hotmail.com", {
   method: "POST",
@@ -131,9 +133,9 @@ const firebaseConfig = {
   }),
 });
 
-  // ✅ Always update counter on page load
-  document.addEventListener("DOMContentLoaded", updateCounter);
+  
 </script>
 </body>
 </html>
+
 
