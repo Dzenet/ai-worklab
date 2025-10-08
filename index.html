@@ -112,7 +112,7 @@ const firebaseConfig = {
     try {
       await addDoc(collection(db, "registrations"), data);
       form.reset();
-      alert("✅ Registration submitted successfully!");
+      alert("✅ Registration submitted successfully!" + " A Teams invitation will be sent out later, including the date and location details" );
       await updateCounter(); // refresh counter after new registration
     } catch (error) {
       alert("⚠️ Failed to submit registration. Please try again.");
@@ -137,5 +137,6 @@ const firebaseConfig = {
 </script>
 </body>
 </html>
+
 
 
