@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,6 +16,7 @@
       align-items: center;
       min-height: 100vh;
     }
+
     .form-container {
       background-color: white;
       padding: 2rem;
@@ -23,22 +25,27 @@
       max-width: 480px;
       width: 100%;
     }
+
     h1 {
       text-align: center;
       color: #333;
     }
+
     p {
       text-align: center;
       color: #555;
       margin-bottom: 2rem;
     }
+
     label {
       font-weight: bold;
       display: block;
       margin-top: 1rem;
       color: #333;
     }
-    input, select {
+
+    input,
+    select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -46,6 +53,7 @@
       border-radius: 6px;
       font-size: 1rem;
     }
+
     button {
       background-color: #007bff;
       color: white;
@@ -57,22 +65,29 @@
       font-size: 1rem;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #0056b3;
     }
   </style>
 </head>
+
 <body>
   <div class="form-container">
     <h1>AI Worklab</h1>
     <p>Explore how AI can enhance your workflow. Sign up below to join the session.</p>
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSezIzDZt3NBZvNN54HWCop2OvX5K68zCsGSmAZYr0EpMtQdlg/viewform?embedded=true" width="640" height="1161" frameborder="0" marginheight="0" marginwidth="0">Laster inn …</iframe>
-  </div>
+    <form action="https://formsubmit.co/dzenet.bero@skatteetaten.no" method="POST"> <input type="hidden" name="_cc"
+        value="ole.akre@skatteetaten.no" /> <label for="name">Full Name</label> <input type="text" id="name"
+        name="Full Name" required /> <label for="email">Corporate Email Address</label> <input type="email" id="email"
+        name="Email" placeholder="name@company.com" required /> <label for="role">Role</label> <input type="text"
+        id="role" name="Role" required /> <label for="experience">Experience Level with AI</label> <select
+        id="experience" name="Experience Level" required>
+        <option value="">-- Select an option --</option>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Advanced">Advanced</option>
+      </select> <button type="submit">Register</button> </form>
   </div>
 </body>
+
 </html>
-
-
-
-
-
